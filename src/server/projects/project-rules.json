@@ -1,0 +1,47 @@
+[
+  {
+    "id": "personal-ai-hub",
+    "name": "Personal AI Hub",
+    "aliases": ["智能体", "个人知识库", "Personal AI Hub", "知识库", "Agent"],
+    "description": "Personal AI Hub, agent backend, project-classified memory, retrieval, and implementation notes.",
+    "keywords": ["智能体", "个人知识库", "知识库", "agent", "codex", "next.js", "typescript", "grep", "embedding", "分类知识库", "原始知识库"],
+    "patterns": ["智能体|个人知识库|知识库|agent|codex|next\\.?js|typescript|grep|embedding|分类知识库|原始知识库"],
+    "priority": 100
+  },
+  {
+    "id": "study-and-exam",
+    "name": "Study and Exam",
+    "aliases": ["学习", "考试", "考研", "英语", "数学"],
+    "description": "Study planning, exam preparation, school tasks, English vocabulary, math and reading comprehension.",
+    "keywords": ["考研", "数学", "英语", "单词", "短语", "阅读理解", "学校", "unit", "词汇", "翻译"],
+    "patterns": ["考研|数学|英语|单词|短语|阅读理解|学校|unit\\s*\\d+|词汇|翻译"],
+    "priority": 80
+  },
+  {
+    "id": "writing",
+    "name": "Writing",
+    "aliases": ["写作", "文风", "文章"],
+    "description": "Writing style, revision, rewriting, article and paragraph work.",
+    "keywords": ["文风", "改写", "仿写", "文章", "段落", "写作", "小说", "散文", "修饰"],
+    "patterns": ["文风|改写|仿写|文章|段落|写作|小说|散文|修饰"],
+    "priority": 70
+  },
+  {
+    "id": "export-and-data-tools",
+    "name": "Export and Data Tools",
+    "aliases": ["导出", "数据导出", "聊天记录"],
+    "description": "Exporting AI chat history and handling local data files.",
+    "keywords": ["导出", "聊天记录", "takeout", "markdown", "deepseek", "gemini", "json", "md"],
+    "patterns": ["导出|聊天记录|takeout|markdown|deepseek|gemini|json|md"],
+    "priority": 60
+  },
+  {
+    "id": "unassigned",
+    "name": "Unassigned",
+    "aliases": ["未分类"],
+    "description": "Fallback project for conversations that do not confidently match configured rules.",
+    "keywords": [],
+    "patterns": [],
+    "priority": 0
+  }
+]
