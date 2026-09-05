@@ -74,6 +74,7 @@ export function memoryToGrepMatch(memory: MemoryRecord, index: number, query = "
     text: memory.content,
     query,
     score,
+    sourceKind: "memory",
     parsed: {
       subject: memory.subject,
       content: memory.content,

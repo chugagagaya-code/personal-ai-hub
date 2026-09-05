@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { answerAgentQuery } from "@/server/agent/agent-service";
 import type { AgentQueryInput } from "@/shared/types";
+import { recordAudit } from "@/server/database/audit";
 
 export async function POST(request: Request) {
   try {
@@ -13,6 +14,7 @@ export async function POST(request: Request) {
     }
 
     const result = await answerAgentQuery(body);
+    recordAudit("agent.queried", "query", undefined, { query: body.query, intent: result.intent?.kind, evidenceCount: result.evidence.length, generationMode: result.generation?.mode });
     return NextResponse.json({ ok: true, result });
   } catch (error) {
     return NextResponse.json(

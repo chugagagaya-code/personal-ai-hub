@@ -15,15 +15,19 @@ dist-ssr
 *.local
 
 # Private local data and secrets
-.env
-.env.local
-.env.*.local
+.env*
+!.env.example
 data/
 原始数据/
 raw-data/
+private-data/
+exports/
+*.jsonl
 *.db
 *.sqlite
 *.sqlite3
+*.sqlite-shm
+*.sqlite-wal
 
 # Sanitized examples are safe to publish.
 !raw-data.example/

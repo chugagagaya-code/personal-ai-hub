@@ -8,6 +8,7 @@ export async function GET(request: Request) {
   try {
     const url = new URL(request.url);
     const projectId = url.searchParams.get("projectId") ?? "unassigned";
+    const scope = url.searchParams.get("scope");
     const type = url.searchParams.get("type") as MemoryType | null;
     const limit = Math.min(Number(url.searchParams.get("limit") ?? 50), 200);
     const includeInactive = url.searchParams.get("includeInactive") === "true";
@@ -17,7 +18,7 @@ export async function GET(request: Request) {
     }
 
     const memories = await listMemories({
-      projectIds: [projectId],
+      projectIds: scope === "all" ? undefined : [projectId],
       types: type ? [type] : undefined,
       limit,
       includeInactive,

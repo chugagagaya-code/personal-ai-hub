@@ -16,6 +16,8 @@ export const USER_DATA_DIR = path.join(DATA_DIR, "users", DEFAULT_USER_ID);
 export const NORMALIZED_DIR = path.join(USER_DATA_DIR, "normalized");
 export const PROJECTS_DIR = path.join(USER_DATA_DIR, "projects");
 export const MEMORY_OVERRIDES_PATH = path.join(USER_DATA_DIR, "memory-overrides.jsonl");
+export const MODEL_GATEWAY_CONFIG_PATH = path.join(USER_DATA_DIR, "model-gateway.json");
+export const DATABASE_PATH = path.join(USER_DATA_DIR, "hub.sqlite");
 
 export const DEEPSEEK_DIR = path.join(RAW_DATA_DIR, "deepseek_data-2026-09-01");
 export const GEMINI_DIR = path.join(RAW_DATA_DIR, "gemini_data");

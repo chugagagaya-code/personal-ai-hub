@@ -5,11 +5,12 @@ export type MessageRole = "user" | "assistant" | "system" | "tool" | "unknown";
 export type MemoryType = "event" | "task" | "problem" | "decision" | "knowledge" | "conversation";
 
 export type MemoryStatus = "active" | "superseded" | "merged" | "ignored";
-export type MemoryOverrideAction = "update" | "ignore" | "supersede" | "merge";
+export type MemoryOverrideAction = "create" | "update" | "ignore" | "supersede" | "merge";
 
 export type CorpusScope = "classified" | "raw" | "all";
 
 export type AnswerStatus = "verified" | "consensus" | "best_supported" | "disputed" | "insufficient";
+export type QueryIntentKind = "recall" | "timeline" | "compare" | "summarize" | "troubleshoot" | "plan" | "fact" | "followup";
 
 export interface SourceRoute {
   platform: Platform;
@@ -82,6 +83,37 @@ export interface Project {
   updatedAt: string;
 }
 
+export interface TopicTerm {
+  term: string;
+  supportConversationCount: number;
+  supportRatio: number;
+  weight: number;
+}
+
+export interface TopicConversationSummary {
+  conversationId: string;
+  title: string;
+  similarity: number;
+  occurredAt?: string;
+  sourceRoute: SourceRoute;
+}
+
+export interface TopicProfile {
+  projectId: string;
+  description: string;
+  conversationCount: number;
+  topTerms: TopicTerm[];
+  representativeConversations: TopicConversationSummary[];
+  recentConversations: TopicConversationSummary[];
+  dateSpan: { start?: string; end?: string };
+}
+
+export interface TopicOverview {
+  profile: TopicProfile;
+  memoryTypeCounts: Partial<Record<MemoryType, number>>;
+  monthlyConversationCounts: Array<{ month: string; count: number }>;
+}
+
 export interface ProjectRule {
   id: string;
   name: string;
@@ -134,6 +166,7 @@ export interface GrepMatch {
   text: string;
   query: string;
   score: number;
+  sourceKind?: "memory" | "classified" | "raw" | "external";
   parsed?: {
     subject?: string;
       content?: string;
@@ -159,13 +192,47 @@ export interface AgentQueryInput {
   };
 }
 
+export interface QueryIntent {
+  kind: QueryIntentKind;
+  scope: "project" | "all";
+  isFollowup: boolean;
+  requiresRawDetail: boolean;
+  requiresExternalSearch: boolean;
+  confidence: number;
+  keywords: string[];
+  dateRange?: { start: string; end: string; label: string };
+  reasons: string[];
+}
+
+export interface ModelCallMetadata {
+  mode: "model" | "local_fallback";
+  model?: string;
+  provider?: string;
+  latencyMs?: number;
+  attempts?: number;
+  fallbackReason?: string;
+}
+
 export interface AgentAnswer {
   status: AnswerStatus;
   answer: string;
   evidence: GrepMatch[];
   usedFallbackRawSearch: boolean;
   deliberation?: DeliberationResult;
+  intent?: QueryIntent;
+  generation?: ModelCallMetadata;
+  memoryCandidates?: MemoryCandidate[];
   nextActions: string[];
+}
+
+export interface MemoryCandidate {
+  id: string;
+  projectId: string;
+  type: Exclude<MemoryType, "event" | "conversation">;
+  subject: string;
+  content: string;
+  confidence: number;
+  createdAt: string;
 }
 
 export interface DeliberationResult {

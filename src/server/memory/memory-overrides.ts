@@ -70,6 +70,10 @@ export function applyMemoryOverrides(records: MemoryRecord[], overrides: MemoryO
   const byId = new Map(records.map((record) => [record.id, record]));
 
   for (const override of overrides) {
+    if (override.action === "create") {
+      if (override.replacementMemory) byId.set(override.replacementMemory.id, override.replacementMemory);
+      continue;
+    }
     if (override.action === "update") {
       for (const id of override.targetMemoryIds) {
         const current = byId.get(id);

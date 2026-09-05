@@ -15,7 +15,11 @@ export async function grepSearch(input: GrepSearchInput): Promise<GrepMatch[]> {
     if (query.length > MAX_QUERY_LENGTH) continue;
     for (const root of roots) {
       const matches = await runRipgrep(query, root, input.contextLines ?? 0, input.maxResults ?? 40);
-      allMatches.push(...matches.map((match) => ({ ...match, query })));
+      allMatches.push(...matches.map((match) => ({
+        ...match,
+        query,
+        sourceKind: input.corpus === "raw" ? "raw" as const : "classified" as const,
+      })));
       if (allMatches.length >= (input.maxResults ?? 40)) return rankMatches(allMatches).slice(0, input.maxResults ?? 40);
     }
   }
